@@ -3,3 +3,52 @@
 @tailwind components;
 
 @tailwind utilities;
+
+/* Preline UI */
+@source "../../../node_modules/preline/dist/*.js";
+@import "../../../node_modules/preline/variants.css";
+
+/* Plugins */
+@plugin "@tailwindcss/forms";
+
+@keyframes fadeIn {
+    from { opacity: 0.4; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+.animate-fade {
+    animation: fadeIn 0.8s ease-in-out;
+}
+.testimonial-card {
+    transition: all 0.5s ease;
+}
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+.active-dot {
+    transform: scale(1.4);
+    background-color: #4F46E5;
+}
+.nav-button {
+    transition: all 0.3s ease;
+}
+.nav-button:hover {
+    background-color: #4F46E5;
+    color: white;
+}
+
+.w-full.max-w-sm {
+  width: 100%;
+  max-width: 24rem; /* Same as your program cards */
+}
+
+.h-80 {
+  height: 20rem; /* Adjust to match your program cards height */
+}
+
+.line-clamp-4 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}

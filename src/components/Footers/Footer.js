@@ -1,6 +1,7 @@
 import React from "react";
-
-export default function Footer() {
+import { Link } from "react-router-dom";
+const BASE_URL = process.env.REACT_APP_SERVER_MODE === 'development'? process.env.REACT_APP_LOCAL_URL : process.env.REACT_APP_PROD_URL
+export default function Footer({programRef, classRef, testimonialRef, handleNavigation}) {
   return (
     <>
       <footer className="relative bg-blueGray-200 pt-8 pb-6">
@@ -35,33 +36,35 @@ export default function Footer() {
                   className="bg-white text-lightBlue-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
                   type="button"
                 >
-                  <a href="https://instagram.com">
-                  <i className="fab fa-instagram"></i>
+                  <a href="https://www.instagram.com/rq_al.ayman/">
+                    <i className="fab fa-instagram"></i>
                   </a>
                 </button>
-                <button
+                {/* <button
                   className="bg-white text-lightBlue-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
                   type="button"
                 >
                   <i className="fab fa-twitter"></i>
-                </button>
-                <button
+                </button> */}
+                {/* <button
                   className="bg-white text-lightBlue-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
                   type="button"
                 >
                   <i className="fab fa-facebook-square"></i>
-                </button>
-                <button
+                </button> */}
+                {/* <button
                   className="bg-white text-pink-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
                   type="button"
                 >
                   <i className="fab fa-dribbble"></i>
-                </button>
+                </button> */}
                 <button
                   className="bg-white text-blueGray-800 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
                   type="button"
                 >
-                  <i className="fab fa-github"></i>
+                  <a href="https://www.instagram.com/rq_al.ayman/">
+                    <i className="fab fa-youtube"></i>
+                  </a>
                 </button>
               </div>
             </div>
@@ -69,78 +72,93 @@ export default function Footer() {
               <div className="flex flex-wrap items-top mb-6">
                 <div className="w-full lg:w-4/12 px-4 ml-auto">
                   <span className="block uppercase text-blueGray-500 text-sm font-semibold mb-2">
-                    Useful Links
+                    Link Cepat
                   </span>
                   <ul className="list-unstyled">
                     <li>
-                      <a
+                      <Link
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                        href="https://www.creative-tim.com/presentation?ref=nr-footer"
+                        to={`${BASE_URL}/about-us`}
                       >
-                        About Us
-                      </a>
+                        Tentang RQA
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                        href="https://blog.creative-tim.com?ref=nr-footer"
+                        to={`${BASE_URL}/#program`}
+                        // onClick={() => handleNavigation('program')}
+                        // ref={programRef}
                       >
-                        Blog
-                      </a>
+                        Program
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                        href="https://www.github.com/creativetimofficial?ref=nr-footer"
+                        to={`${BASE_URL}/#classes`}
+                        // onClick={() => handleNavigation('our-classes')}
+                        // ref={classRef}
                       >
-                        Github
-                      </a>
+                        Kelas Tersedia
+                      </Link>
                     </li>
                     <li>
-                      <a
+                      <Link
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                        href="https://www.creative-tim.com/bootstrap-themes/free?ref=nr-footer"
+                        to={`${BASE_URL}/#testimoni`}
+                        // onClick={() => handleNavigation('testimonial')}
+                        // ref={testimonialRef}
+
                       >
-                        Free Products
-                      </a>
+                        Testimoni
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                        to={`${BASE_URL}/contact-us`}
+                      >
+                        Kontak RQA
+                      </Link>
                     </li>
                   </ul>
                 </div>
                 <div className="w-full lg:w-4/12 px-4">
                   <span className="block uppercase text-blueGray-500 text-sm font-semibold mb-2">
-                    Other Resources
+                    Kelas Tersedia
                   </span>
                   <ul className="list-unstyled">
                     <li>
                       <a
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                        href="https://github.com/creativetimofficial/notus-react/blob/main/LICENSE.md?ref=nr-footer"
+                        href={`${BASE_URL}/opened-classes`}
                       >
-                        MIT License
+                        Kelas Baru
                       </a>
                     </li>
                     <li>
                       <a
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                        href="https://creative-tim.com/terms?ref=nr-footer"
+                        href={`${BASE_URL}/opened-classes?type=free`}
                       >
-                        Terms & Conditions
+                        Kelas Gratis
                       </a>
                     </li>
                     <li>
                       <a
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                        href="https://creative-tim.com/privacy?ref=nr-footer"
+                        href={`${BASE_URL}/opened-classes?categ=dewasa`}
                       >
-                        Privacy Policy
+                        Kelas Remaja/Dewasa
                       </a>
                     </li>
                     <li>
                       <a
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                        href="https://creative-tim.com/contact-us?ref=nr-footer"
+                        href={`${BASE_URL}/opened-classes?categ=anak-anak`}
                       >
-                        Contact Us
+                        Kelas Anak-Anak
                       </a>
                     </li>
                   </ul>
@@ -152,7 +170,7 @@ export default function Footer() {
           <div className="flex flex-wrap items-center md:justify-between justify-center">
             <div className="w-full md:w-4/12 px-4 mx-auto text-center">
               <div className="text-sm text-blueGray-500 font-semibold py-1">
-                Copyright © {new Date().getFullYear()} Created with enjoy by M. {" "}
+                Copyright © {new Date().getFullYear()} Created with enjoy by Maryam Al Auza'iy. {" "}
                 <a
                   href="https://www.creative-tim.com?ref=nr-footer"
                   className="text-blueGray-500 hover:text-blueGray-800"
