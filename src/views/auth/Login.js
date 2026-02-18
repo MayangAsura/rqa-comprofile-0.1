@@ -1,15 +1,54 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import {useDispatch, useSelector} from 'react-redux'
+import { ToastContainer, toast } from 'react-toastify';
+import Cookie from 'js-cookie'
+import axios from "axios";
+import {login, resetInfo} from '../../redux/authSlice'
+
+const BASE_URL = process.env.REACT_APP_SERVER_MODE === 'development'? process.env.REACT_APP_LOCAL_URL : process.env.REACT_APP_PROD_URL
 
 export default function Login() {
+  const { userInfo, orgzInfo } = useSelector(state => state.authReducer)
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+  const dispatch = useDispatch()
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if(userInfo){
+      navigate('/admin')
+    }
+
+  }, [userInfo, navigate])
+
+  const handleLogin = async () => {
+    try {
+      // await axios.post(`${BASE_URL || 'http://localhost:3030'}/users/login`, {username, password})
+      //             .then( result => {
+      //               if(result.status === 200){
+      //                 Cookie.set('token', result.data.data.token)
+      //                 toast('Alhamdulillah, login Anda berhasil!')
+      //                 navigate('/admin')
+      //               }else{
+      //                 toast('Afwan, login Anda gagal!')
+      //               }
+      //             })
+      dispatch(login({username, password}))
+    } catch (error) {
+        toast("Afwan, ada masalah pada login!")
+    }
+  }
   return (
     <>
-      <div className="container mx-auto px-4 h-full">
+      <div className="container mx-auto px-4 py-32 h-full">
         <div className="flex content-center items-center justify-center h-full">
           <div className="w-full lg:w-4/12 px-4">
             <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0">
               <div className="rounded-t mb-0 px-6 py-6">
-                <div className="text-center mb-3">
+                {/* <div className="text-center mb-3">
                   <h6 className="text-blueGray-500 text-sm font-bold">
                     Sign in with
                   </h6>
@@ -38,12 +77,12 @@ export default function Login() {
                     Google
                   </button>
                 </div>
-                <hr className="mt-6 border-b-1 border-blueGray-300" />
-              </div>
+                <hr className="mt-6 border-b-1 border-blueGray-300" /> */}
+              </div> 
               <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
-                <div className="text-blueGray-400 text-center mb-3 font-bold">
+                {/* <div className="text-blueGray-400 text-center mb-3 font-bold">
                   <small>Or sign in with credentials</small>
-                </div>
+                </div> */}
                 <form>
                   <div className="relative w-full mb-3">
                     <label
@@ -56,6 +95,7 @@ export default function Login() {
                       type="email"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       placeholder="Email"
+                      onChange={(e) => setUsername(e.target.value)}
                     />
                   </div>
 
@@ -70,6 +110,7 @@ export default function Login() {
                       type="password"
                       className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                       placeholder="Password"
+                      onChange={(e) => setPassword(e.target.value)}
                     />
                   </div>
                   <div>
@@ -89,6 +130,7 @@ export default function Login() {
                     <button
                       className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
                       type="button"
+                      onClick={handleLogin}
                     >
                       Sign In
                     </button>

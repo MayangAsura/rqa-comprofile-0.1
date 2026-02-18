@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.{html,js}"],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
@@ -25,6 +26,10 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('flowbite/plugin')({
+        datatables: true,
+    }),
+  ],
 }
 

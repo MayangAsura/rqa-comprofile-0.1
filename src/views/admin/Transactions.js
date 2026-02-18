@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 
 import CardTable from "../../components/Cards/CardTable.js";
 import Datatable from "../../components/Tables/Datatables.js"
-import NewDataTable from "../../components/Tables/NewDatatables.js";
+import NewDataTable from "../../components/Tables/NewDatatables.jsx";
 
 export default function Tables({items}) {
   const [data, setData] = useState([])
@@ -28,14 +28,14 @@ export default function Tables({items}) {
           <CardTable color="dark" />
         </div> */}
         <div className="w-full mb-12 px-4">
-          {/* <NewDataTable 
+          <NewDataTable 
             data={data}
             searchBar
             excelExport
             pageSizeControl
             pagination
             removableRows
-          /> */}
+          />
         </div>
       </div>
     </>

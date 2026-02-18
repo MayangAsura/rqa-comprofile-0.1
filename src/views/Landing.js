@@ -28,6 +28,7 @@ import SquishyCard from "../components/Cards/SquishyCard";
 import SquareSlider from "../components/Sliders/SquareSliders";
 import CardTestimonial from "../components/Cards/CardTestimonial";
 import ProductCard from "../components/Cards/ProductCard";
+import OrderHitory from "./customers/OrderHistory";
 
 const programs = [
   {featured_image: program1, title: "Tashih Tilawah Al Qur'an", description: "Program perbaikan bacaan Al Qur'an khusus Muslimah dan Anak-Anak"},
@@ -574,6 +575,8 @@ export default function Landing() {
             </div>
           </div>
         </section>
+
+        <OrderHitory/>
 
         <section id='testimonial' className="pb-20 relative block bg-blueGray-800" ref={testimonialRef}>
           <div

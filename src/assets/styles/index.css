@@ -5,11 +5,24 @@
 @tailwind utilities;
 
 /* Preline UI */
-@source "../../../node_modules/preline/dist/*.js";
-@import "../../../node_modules/preline/variants.css";
+/* @source "../../../node_modules/preline/dist/*.js";
+@import "../../../node_modules/preline/variants.css"; */
 
 /* Plugins */
-@plugin "@tailwindcss/forms";
+/* @plugin "@tailwindcss/forms"; */
+
+@layer components {
+  /* .btn-primary {
+      @apply py-1.5 px-3 text-center bg-blue-700 rounded-md text-white;
+  } */
+}
+
+/* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import "flowbite/src/themes/default";
+
+@plugin "flowbite/plugin";
+
+@source "../node_modules/flowbite"; */
 
 @keyframes fadeIn {
     from { opacity: 0.4; transform: scale(0.95); }

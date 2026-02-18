@@ -148,9 +148,9 @@ export default function Footer({programRef, classRef, testimonialRef, handleNavi
                     <li>
                       <a
                         className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
-                        href={`${BASE_URL}/opened-classes?categ=dewasa`}
+                        href={`${BASE_URL}/opened-classes?type=paid`}
                       >
-                        Kelas Remaja/Dewasa
+                        Kelas Premiun
                       </a>
                     </li>
                     <li>
@@ -159,6 +159,22 @@ export default function Footer({programRef, classRef, testimonialRef, handleNavi
                         href={`${BASE_URL}/opened-classes?categ=anak-anak`}
                       >
                         Kelas Anak-Anak
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                        href={`${BASE_URL}/opened-classes?categ=dewasa`}
+                      >
+                        Kelas Remaja/Dewasa
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        className="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm"
+                        href={`${BASE_URL}/opened-classes?categ=umum`}
+                      >
+                        Kelas Umum
                       </a>
                     </li>
                   </ul>

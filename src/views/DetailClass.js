@@ -41,16 +41,16 @@ const product = {
     { id: 'black', name: 'Black', classes: 'bg-gray-900 checked:outline-gray-900' },
   ],
   packets: [
-    { name: 'Satu Orang', code: '1p', inStock: true, additionalAmount: 0 },
-    { name: 'Berdua', code: '2p', inStock: true, additionalAmount: -5000 },
-    { name: 'Kelompok berLima', code: '5p', inStock: true, additionalAmount: -8000 },
-    // { name: 'XS', inStock: true },
-    // { name: 'S', inStock: true },
-    // { name: 'M', inStock: true },
-    // { name: 'L', inStock: true },
-    // { name: 'XL', inStock: true },
-    // { name: '2XL', inStock: true },
-    // { name: '3XL', inStock: true },
+    { name: 'Satu Orang', code: '1p', is_stock: true, additional_amount: 0 },
+    { name: 'Berdua', code: '2p', is_stock: true, additional_amount: -5000 },
+    { name: 'Kelompok berLima', code: '5p', is_stock: true, additional_amount: -8000 },
+    // { name: 'XS', is_stock: true },
+    // { name: 'S', is_stock: true },
+    // { name: 'M', is_stock: true },
+    // { name: 'L', is_stock: true },
+    // { name: 'XL', is_stock: true },
+    // { name: '2XL', is_stock: true },
+    // { name: '3XL', is_stock: true },
   ],
   description:
     'Kelas At Tibyan Jilid 1 adalah kelas ',
@@ -105,16 +105,16 @@ const availableClass = [
             { id: 'black', name: 'Black', classes: 'bg-gray-900 checked:outline-gray-900' },
         ],
         packets: [
-            { name: 'Satu Orang', code:'1p', inStock: true, additionalAmount: 0 },
-            { name: 'Berdua', code:'2p', inStock: true, additionalAmount: -5000 },
-            { name: 'Kelompok berLima', code:'5p', inStock: true, additionalAmount: -8000 },
-            // { name: 'XS', inStock: true },
-            // { name: 'S', inStock: true },
-            // { name: 'M', inStock: true },
-            // { name: 'L', inStock: true },
-            // { name: 'XL', inStock: true },
-            // { name: '2XL', inStock: true },
-            // { name: '3XL', inStock: true },
+            { name: 'Satu Orang', code:'1p', is_stock: true, additional_amount: 0 },
+            { name: 'Berdua', code:'2p', is_stock: true, additional_amount: -5000 },
+            { name: 'Kelompok berLima', code:'5p', is_stock: true, additional_amount: -8000 },
+            // { name: 'XS', is_stock: true },
+            // { name: 'S', is_stock: true },
+            // { name: 'M', is_stock: true },
+            // { name: 'L', is_stock: true },
+            // { name: 'XL', is_stock: true },
+            // { name: '2XL', is_stock: true },
+            // { name: '3XL', is_stock: true },
         ],
         // description:
         //     'Kelas At Tibyan Jilid 1 adalah kelas ',
@@ -161,16 +161,16 @@ const availableClass = [
             { id: 'black', name: 'Black', classes: 'bg-gray-900 checked:outline-gray-900' },
         ],
         packets: [
-            { name: 'Satu Orang', code:'1p', inStock: true, additionalAmount: 0 },
-            { name: 'Berdua', code:'2p', inStock: true, additionalAmount: -5000 },
-            { name: 'Kelompok berLima', code:'5p', inStock: true, additionalAmount: -8000 },
-            // { name: 'XS', inStock: true },
-            // { name: 'S', inStock: true },
-            // { name: 'M', inStock: true },
-            // { name: 'L', inStock: true },
-            // { name: 'XL', inStock: true },
-            // { name: '2XL', inStock: true },
-            // { name: '3XL', inStock: true },
+            { name: 'Satu Orang', code:'1p', is_stock: true, additional_amount: 0 },
+            { name: 'Berdua', code:'2p', is_stock: true, additional_amount: -5000 },
+            { name: 'Kelompok berLima', code:'5p', is_stock: true, additional_amount: -8000 },
+            // { name: 'XS', is_stock: true },
+            // { name: 'S', is_stock: true },
+            // { name: 'M', is_stock: true },
+            // { name: 'L', is_stock: true },
+            // { name: 'XL', is_stock: true },
+            // { name: '2XL', is_stock: true },
+            // { name: '3XL', is_stock: true },
         ],
         // description:
         //     'Kelas At Tibyan Jilid 1 adalah kelas ',
@@ -217,16 +217,16 @@ const availableClass = [
             { id: 'black', name: 'Black', classes: 'bg-gray-900 checked:outline-gray-900' },
         ],
         packets: [
-            { name: 'Satu Orang', code:'1p', inStock: true, additionalAmount: 0 },
-            { name: 'Berdua', code:'2p', inStock: true, additionalAmount: -5000 },
-            { name: 'Kelompok berLima', code:'3p', inStock: true, additionalAmount: -8000 },
-            // { name: 'XS', inStock: true },
-            // { name: 'S', inStock: true },
-            // { name: 'M', inStock: true },
-            // { name: 'L', inStock: true },
-            // { name: 'XL', inStock: true },
-            // { name: '2XL', inStock: true },
-            // { name: '3XL', inStock: true },
+            { name: 'Satu Orang', code:'1p', is_stock: true, additional_amount: 0 },
+            { name: 'Berdua', code:'2p', is_stock: true, additional_amount: -5000 },
+            { name: 'Kelompok berLima', code:'3p', is_stock: true, additional_amount: -8000 },
+            // { name: 'XS', is_stock: true },
+            // { name: 'S', is_stock: true },
+            // { name: 'M', is_stock: true },
+            // { name: 'L', is_stock: true },
+            // { name: 'XL', is_stock: true },
+            // { name: '2XL', is_stock: true },
+            // { name: '3XL', is_stock: true },
         ],
         // description:
         //     'Kelas At Tibyan Jilid 1 adalah kelas ',
@@ -273,16 +273,16 @@ const availableClass = [
             { id: 'black', name: 'Black', classes: 'bg-gray-900 checked:outline-gray-900' },
         ],
         packets: [
-            { name: 'Satu Orang', code:'1p', inStock: true, additionalAmount: 0 },
-            { name: 'Berdua', code:'2p', inStock: true, additionalAmount: -5000 },
-            { name: 'Kelompok berLima', code:'5p', inStock: true, additionalAmount: -8000 },
-            // { name: 'XS', inStock: true },
-            // { name: 'S', inStock: true },
-            // { name: 'M', inStock: true },
-            // { name: 'L', inStock: true },
-            // { name: 'XL', inStock: true },
-            // { name: '2XL', inStock: true },
-            // { name: '3XL', inStock: true },
+            { name: 'Satu Orang', code:'1p', is_stock: true, additional_amount: 0 },
+            { name: 'Berdua', code:'2p', is_stock: true, additional_amount: -5000 },
+            { name: 'Kelompok berLima', code:'5p', is_stock: true, additional_amount: -8000 },
+            // { name: 'XS', is_stock: true },
+            // { name: 'S', is_stock: true },
+            // { name: 'M', is_stock: true },
+            // { name: 'L', is_stock: true },
+            // { name: 'XL', is_stock: true },
+            // { name: '2XL', is_stock: true },
+            // { name: '3XL', is_stock: true },
         ],
         // description:
         //     'Kelas At Tibyan Jilid 1 adalah kelas ',
@@ -650,7 +650,7 @@ export default function DetailClass() {
                             defaultChecked={packet === class_data?.packets[0]}
                             name="packet"
                             type="radio"
-                            disabled={!packet.inStock}
+                            disabled={!packet.is_stock}
                             onClick={() => handleFormData('packet', packet.code)}
                             className="absolute inset-0 appearance-none focus:outline focus:outline-0 disabled:cursor-not-allowed"
                             />
@@ -683,7 +683,7 @@ export default function DetailClass() {
                             // defaultChecked={packet === class_data?.packets[0]}
                                 name="promo_code"
                                 type="text"
-                                // disabled={!packet.inStock}
+                                // disabled={!packet.is_stock}
                                 onChange={(e) => handleFormData('promo_code', e.target.value)}
                                 className="block w-full rounded-md px-2 border-gray-200 absolute inset-0 appearance-none focus:outline focus:outline-0 disabled:cursor-not-allowed focus:ring-blue-400"
                             />
@@ -801,6 +801,16 @@ export default function DetailClass() {
                         <label htmlFor="phone_number" className="block mb-2.5 text-sm font-medium text-heading">No. Telepon (No WhatsApp Aktif)</label>
                         <input type="text" id="phone_number" onChange={(e) => handleFormData('phone_number', e.target.value)} className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="08123456789" required />
                     </div>
+                    <div className="mb-4">
+                        <label htmlFor="domicile" className="block mb-2.5 text-sm font-medium text-heading">Kota Domisili</label>
+                        <select type="text" id="domicile" onChange={(e) => handleFormData('domicile', e.target.value)} className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="08123456789">
+
+                        </select>
+                    </div>
+                    <div className="mb-4">
+                        <label htmlFor="job" className="block mb-2.5 text-sm font-medium text-heading">Pekerjaan/Kegiatan</label>
+                        <input type="text" id="job" onChange={(e) => handleFormData('job', e.target.value)} className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="08123456789" required />
+                    </div>
                     {/* Divider */}
                     <div className="border-b border-default">
 
@@ -863,7 +873,7 @@ export default function DetailClass() {
                     {/* <a 
                         href={`https://api.whatsapp.com/send?phone=6285216527392&text=Assalamu%27alaikum%2C%20tim%20RQA%2C%20ana%20ingin%20mendaftar%20kelas%20-${form_order.class_name}-%20untuk%20paket%20-${form_order.packet}-%3A%0A${form_order.names}%0A%0ANomor%20WA%3A%20${form_order.phone_number}%0AKode%20Promo%3A%20${form_order.promo_code?form_order.promo_code`(${form_order.discount}%)`:'-'}%20%20%0ATotal%20Bayar%3A%20Rp${formatCurrency(form_order?.totalPrice, 'IDR')}%0A%0AJazaakumullahu%20khayran.`} 
                         className="block text-white text-center text-base bg-amber-600 box-border border border-transparent rounded-md my-3 hover:bg-amber-700 focus:ring-4 focus:ring-brand-medium shadow-xs leading-5 rounded-base font-medium px-4 py-2.5 focus:outline-none w-full mb-3">Daftar</a> */}
-                        <button onClick={() => handlePay()} className="block text-white text-center text-base bg-amber-600 box-border border border-transparent rounded-md my-3 hover:bg-amber-700 focus:ring-4 focus:ring-brand-medium shadow-xs leading-5 rounded-base font-medium px-4 py-2.5 focus:outline-none w-full mb-3">Bayar</button>
+                        <button onClick={() => handleRegist()} className="block text-white text-center text-base bg-amber-600 box-border border border-transparent rounded-md my-3 hover:bg-amber-700 focus:ring-4 focus:ring-brand-medium shadow-xs leading-5 rounded-base font-medium px-4 py-2.5 focus:outline-none w-full mb-3">Bayar</button>
                     {/* <div className="text-sm font-medium text-bo dy">Not registered? <a href="#" className="text-fg-brand hover:underline">Create account</a></div> */}
                 </form>
             </Modal>
