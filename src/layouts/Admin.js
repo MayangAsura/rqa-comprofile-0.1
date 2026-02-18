@@ -29,11 +29,11 @@ export default function Admin() {
           <Routes>
             <Route path="/admin" exact component={Dashboard} />
             <Route path="/admin/dashboard" exact element={Dashboard} />
-            <Route path="/admin/maps" exact element={Maps} />
-            <Route path="/admin/settings" exact element={Settings} />
-            <Route path="/admin/tables" exact element={Tables} />
-            <Route path="/admin/classes" exact element={Products} />
-            <Route exact path="/admin/profile" component={Profile} />
+            <Route path="/admin/maps" exact element={<Maps/>} />
+            <Route path="/admin/settings" exact element={<Settings/>} />
+            <Route path="/admin/tables" exact element={<Tables/>} />
+            <Route path="/admin/classes" exact element={<Products/>} />
+            <Route exact path="/admin/profile" component={<Profile/>} />
             {/* <Navigate from="/admin" to="/admin/dashboard" /> */}
           </Routes>
           <FooterAdmin />
