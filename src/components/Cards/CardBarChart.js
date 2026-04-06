@@ -1,8 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import Chart from "chart.js";
 
-export default function CardBarChart() {
+import supabase from "configs/supabase";
+
+export default function CardBarChart({productId}) {
+
+  const [items, setItems] = useState([])
+  const [labels, setLabels] = useState([])
+
   React.useEffect(() => {
+
+    getLatestData()
+    getLabels()
+    console.log('product from card barchart', productId)
+    if(productId){
+      getCurrentData(productId)
+    }
+
     let config = {
       type: "bar",
       data: {
@@ -20,18 +34,19 @@ export default function CardBarChart() {
             label: new Date().getFullYear(),
             backgroundColor: "#ed64a6",
             borderColor: "#ed64a6",
-            data: [30, 78, 56, 34, 100, 45, 13],
+            data: items,
+            // data: [30, 78, 56, 34, 100, 45, 13],
             fill: false,
             barThickness: 8,
           },
-          {
-            label: new Date().getFullYear() - 1,
-            fill: false,
-            backgroundColor: "#4c51bf",
-            borderColor: "#4c51bf",
-            data: [27, 68, 86, 74, 10, 4, 87],
-            barThickness: 8,
-          },
+          // {
+          //   label: new Date().getFullYear() - 1,
+          //   fill: false,
+          //   backgroundColor: "#4c51bf",
+          //   borderColor: "#4c51bf",
+          //   data: [27, 68, 86, 74, 10, 4, 87],
+          //   barThickness: 8,
+          // },
         ],
       },
       options: {
@@ -97,7 +112,65 @@ export default function CardBarChart() {
     };
     let ctx = document.getElementById("bar-chart").getContext("2d");
     window.myBar = new Chart(ctx, config);
-  }, []);
+  }, [productId]);
+
+  const getLatestData = async () => {
+    let { data: orgz_products, error_p } = await supabase
+                                          .from('orgz_products')
+                                          .select('id')
+                                          .order('id', {ascending: false})
+                                          .limit(1)
+                                          .single()
+    if(orgz_products){
+      let { data: orgz_orders, error_o } = await supabase
+                                        .from('orgz_orders')
+                                        .select('total_price, orgz_order_details(orgz_product_id)')
+                                        .eq('orgz_order_details.orgz_product_id', orgz_products.id)
+                                        .single()
+      if(orgz_orders){
+        setItems([items, orgz_orders.total_price])
+      }
+
+    }
+
+    console.log('items', items)
+  }
+
+  const getLabels = async (product=null) => {
+    let { data: orgz_products, error } = await supabase
+                                        .from('orgz_products')
+                                        .select('created_at')
+                                        .eq('id', productId)
+                                        .single()
+
+    if(orgz_products){
+      const diff = new Date() - new Date(orgz_products['created_at'])
+      const days = new Date(diff).getDay()
+      console.log(diff, days)
+      // setLabels()
+      for (let index = 0; index < diff; index++) {
+        // const element = array[index];
+        setLabels([...labels, 'Day ' + index+1])
+      }
+    }
+  }
+
+  const getCurrentData = async (product) => {
+    if(product){
+
+      let { data: orgz_orders, error_o } = await supabase
+                                        .from('orgz_orders')
+                                        .select('total_price, orgz_order_details(orgz_product_id)')
+                                        .eq('orgz_order_details.orgz_product_id', product)
+                                        .single()
+      if(orgz_orders){
+        setItems([items, orgz_orders.total_price])
+      }
+
+    }
+
+    console.log('items', items)
+  }
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">

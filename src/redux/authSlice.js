@@ -4,15 +4,21 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
+import Header from 'components/Headers/Header';
 
 const initialState = {
     error: false,
     errorMessage: "",
     userInfo: null,
-    orgzInfo: null
+    orgzInfo: {
+      orgz_id: null,
+      orgz_name: null
+    },
+    orgzId: null
 }
 
-const BASE_URL = process.env.REACT_APP_SERVER_MODE === 'development'? process.env.REACT_APP_LOCAL_URL : process.env.REACT_APP_PROD_URL
+const BASE_URL = process.env.REACT_APP_SERVER_MODE === 'development'? process.env.REACT_APP_LOCAL_SERVER_URL : process.env.REACT_APP_PROD_SERVER_URL
+const LOCAL_URL = process.env.REACT_APP_LOCAL_URL
 
 // const initialState = {
 //   entities: [],
@@ -22,9 +28,11 @@ const BASE_URL = process.env.REACT_APP_SERVER_MODE === 'development'? process.en
 export const login = createAsyncThunk(
   '/api/auth/login',
   async (data) => {
-    await axios.post(`${BASE_URL}/api/auth/login`, data )
+    await axios.post(`${BASE_URL}/api/auth/login`, data, {
+      // withCredentials: true,
+    })
           .then(result => {
-            console.log(result)
+            console.log('result', result)
             if(result.status === 200){
               
               // Cookies.set('token', result.data.data.token)
@@ -189,10 +197,12 @@ export const authSlice = createSlice({
           username: action.payload.data.username,
           full_name: action.payload.data.full_name,
         }
+        state.userEmail = action.payload.data.username
         state.orgzInfo = {
           orgz_id: action.payload.data.orgz_id,
           org_name: action.payload.data.orgz_name,
         }
+        state.orgzId = action.payload.data.orgz_id
       }
     )
   }

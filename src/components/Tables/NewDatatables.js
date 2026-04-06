@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import * as XLSX from "xlsx";
 // import { ColumnData, sortType } from "../../types";
 import {
@@ -11,6 +11,8 @@ import {
 	TrashOutline,
 } from "react-ionicons";
 
+// import ChevronForwardOutline from "react-ionicons";
+
 // interface DataTableProps {
 // 	data: ColumnData;
 // 	searchBar?: boolean;
@@ -22,6 +24,7 @@ import {
 
 const NewDataTable = ({
 	data,
+	type,
 	searchBar = false,
 	excelExport = false,
 	pagination = false,
@@ -36,6 +39,11 @@ const NewDataTable = ({
 	const [sortConfig, setSortConfig] = useState(null);
 	const [pageSize, setPageSize] = useState(10);
 	const [selectedRows, setSelectedRows] = useState([]);
+
+	useEffect(() => {
+		if(data)
+			console.log('data', data)
+	}, [data])
 
 	const handleSearch = (event) => {
 		setSearchTerm(event.target.value);
@@ -74,10 +82,11 @@ const NewDataTable = ({
 	};
 
 	const handleRowSelect = (rowIndex) => {
-		const selectedRowIndex = selectedRows.indexOf(String(rowIndex));
+		const selectedRowIndex = selectedRows.indexOf(String	(rowIndex));
 		if (selectedRowIndex === -1) {
 			setSelectedRows([...selectedRows, String(rowIndex)]);
 		} else {
+			console.log(rowIndex)
 			const updatedSelectedRows = [...selectedRows];
 			updatedSelectedRows.splice(selectedRowIndex, 1);
 			setSelectedRows(updatedSelectedRows);
@@ -136,7 +145,7 @@ const NewDataTable = ({
 		<div className="max-w-full overflow-x-auto py-5">
 			<div className="flex w-full items-center justify-between mb-5">
 				{searchBar ? (
-					<div className="flex md:w-[30%] w-[70%] items-center gap-5 rounded-lg px-3 py-2 bg-[#303030]">
+					< div className="flex md:w-[30%] w-[70%] items-center gap-5 rounded-lg px-3 py-2 bg-[#35a4e5]">
 						<SearchOutline cssClasses={"!text-gray-300"} />
 						<input
 							type="text"
@@ -154,7 +163,8 @@ const NewDataTable = ({
 					{excelExport && (
 						<button
 							onClick={exportToExcel}
-							className="rounded-lg bg-[#303030] p-2"
+							className="rounded-lg bg-[#35a4e5] p-2"
+							// bg-[#303030]
 						>
 							<DownloadOutline
 								width={"26px"}
@@ -167,7 +177,7 @@ const NewDataTable = ({
 						<button
 							onClick={handleDeleteSelectedRows}
 							disabled={selectedRows.length === 0}
-							className="rounded-lg bg-[#303030] p-2 disabled:opacity-50"
+							className="rounded-lg bg-[#35a4e5] p-2 disabled:opacity-50"
 						>
 							<TrashOutline
 								width={"26px"}
@@ -185,7 +195,8 @@ const NewDataTable = ({
 			<div className="table-container">
 				<table className="w-full overflow-x-auto max-w-[100vw]">
 					<thead>
-						<tr className="bg-[#303030] h-[50px]">
+						<tr className="bg-[#35a4e5] h-[50px]">
+							{/* bg-[#303030] */}
 							<th className="hidden">Actions</th>
 							<th className="font-medium text-gray-300 text-[16px] pl-5">#</th>
 							{columns.map((column, index) => (
@@ -218,11 +229,13 @@ const NewDataTable = ({
 								key={rowIndex}
 								className={`h-[50px] cursor-pointer ${
 									selectedRows.includes(String(rowIndex))
-										? "bg-[#4d4d4d]"
+										? "bg-[#8cd5f3]"
 										: rowIndex % 2
-										? "bg-[#242424]"
-										: "bg-[#1f1f1f]"
+										? "bg-[#fefefe]"
+										: "bg-[#dceffa]"
 								}`}
+								// "bg-[#242424]"
+								// "bg-[#1f1f1f]"
 							>
 								<td className="hidden">
 									<input
@@ -267,11 +280,11 @@ const NewDataTable = ({
 			</div>
 			<div className="w-full mt-5 flex items-center justify-between">
 				{pageSizeControl ? (
-					<div className="rounded-lg py-[2px] pr-1 bg-[#303030] w-fit text-gray-400">
+					<div className="rounded-lg py-[2px] pr-1 bg-[#99dcf8] w-fit text-gray-800">
 						<select
 							value={pageSize}
 							onChange={(e) => setPageSize(Number(e.target.value))}
-							className="bg-transparent outline-none w-[80px] px-1"
+							className="bg-transparent w-[80px] px-1"
 						>
 							<option value={5}>5</option>
 							<option value={10}>10</option>

@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import {
   Dialog,
   DialogBackdrop,
@@ -128,6 +129,9 @@ export default function Classes() {
     ]
   )
 
+  const [category, setCategory] = useState(useParams().categ)
+  const [type, setType] = useState(useParams().type)
+
   useEffect(() => {
 
     // if(sort_by){
@@ -137,7 +141,7 @@ export default function Classes() {
     
     // console.log(sortOptions)
 
-    if(Object.keys(filters_data).length > 0 || subCategory_id){
+    if(Object.keys(filters_data).length > 0 || subCategory_id || category || type){
       // for()
       // setClasses(classes.filter(i => filters_data.indexOf(i) =))
       // setClasses(availableClass)
@@ -184,6 +188,12 @@ export default function Classes() {
     if(subCategory_id){
       setClasses(sorted_classes.filter(item => item.subcategory_id == subCategory_id))
     }
+    if(category){
+      setClasses(sorted_classes.filter(item => item.type === category))
+    }
+    if(type){
+      setClasses(sorted_classes.filter(item => type =='free'? item.price == 0 : item.price > 0))
+    }
 
       // sortClasses(sort_by)
       console.log('classes', classes)
@@ -226,6 +236,8 @@ export default function Classes() {
       
       //  i== Object.keys(classes).includes(Object.keys(filters_data))
       // setClasses(classes.filter((i, key) => Object.keys(filters).map((j, k) => Object.values(Object.keys(classes))[key] == Object.values(Object.keys(filters))[k] )))z
+    }else{
+      setClasses(availableClass)
     }
 
     // Apply sorting
@@ -235,7 +247,7 @@ export default function Classes() {
   
   // setClasses(classes);
     
-  }, [filters_data, sort_by, subCategory_id])
+  }, [filters_data, sort_by, subCategory_id, category, type])
 
   const handleSort = (arr, field, order) => {
   return arr.sort((a, b) => {

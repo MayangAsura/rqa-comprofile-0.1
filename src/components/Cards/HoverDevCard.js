@@ -6,7 +6,7 @@ const HoverDevCards = () => {
   return (
     <>
       {/* // <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-4"> */}
-      
+
         <HoverDevCard
           title="Pengajar Kompeten"
           subtitle="Para pengajar tahsin dan tahfidz Al-Qur'an di Rumah Qur’an Al Ayman adalah para pengajar yang kompeten serta memiliki pengalaman mengajar di bidang pengajaran Al-Qur'an."
@@ -15,23 +15,23 @@ const HoverDevCards = () => {
           href="#"
           Icon={FiUser}
         />
-        <HoverDevCard 
-          title="Sistem Interaktif" 
-          subtitle="Pembelajaran online yang interaktif langsung antara pengajar dan murid" 
-          href="#" 
-          Icon={FiMail} 
+        <HoverDevCard
+          title="Sistem Interaktif"
+          subtitle="Pembelajaran online yang interaktif langsung antara pengajar dan murid"
+          href="#"
+          Icon={FiMail}
         />
-        <HoverDevCard 
-          title="Komunitas Aktif" 
-          subtitle="Bergabung dengan komunitas pembelajar Al-Qur'an yang solid" 
-          href="#" 
-          Icon={FiUsers} 
+        <HoverDevCard
+          title="Komunitas Aktif"
+          subtitle="Bergabung dengan komunitas pembelajar Al-Qur'an yang solid"
+          href="#"
+          Icon={FiUsers}
         />
-        <HoverDevCard 
-          title="Fleksibel" 
-          subtitle="Jadwal belajar yang dapat disesuaikan dengan kesibukan Anda" 
-          href="#" 
-          Icon={FiCreditCard} 
+        <HoverDevCard
+          title="Fleksibel"
+          subtitle="Jadwal belajar yang dapat disesuaikan dengan kesibukan Anda"
+          href="#"
+          Icon={FiCreditCard}
         />
 
       {/* </div> */}
@@ -50,7 +50,7 @@ const HoverDevCard = ({ title, subtitle, Icon, href, additionalClass }) => {
         className="block p-6 rounded-lg border border-blueGray-300 relative overflow-hidden group bg-white hover:shadow-xl transition-all duration-300 min-h-[180px]"
       >
         {/* Gradient Background on Hover */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#42adf5] to-[#4281f5] translate-y-[101%] group-hover:translate-y-0 transition-transform duration-500 ease-in-out" />
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-500 translate-y-[101%] group-hover:translate-y-0 transition-transform duration-500 ease-in-out" />
         {/* <div style={{
     background: 'linear-gradient(to right, #7c3aed, #4f46e5)',
     transform: 'translateY(100%)'
@@ -58,16 +58,16 @@ const HoverDevCard = ({ title, subtitle, Icon, href, additionalClass }) => {
 
         {/* Large Background Icon */}
         <Icon className="absolute z-10 -top-8 -right-8 text-8xl text-blueGray-100 group-hover:text-violet-300 group-hover:rotate-12 transition-all duration-500" />
-        
+
         {/* Main Icon */}
         <div className="relative z-20">
           <Icon className="mb-4 text-3xl text-[#42adf5] group-hover:text-white transition-colors duration-300" />
-          
+
           {/* Content */}
-          <h3 className="font-semibold text-lg text-blueGray-800 group-hover:text-white relative z-20 duration-300 mb-2">
+          <h3 className="font-semibold text-lg text-blueGray-800 group-hover:text-violet-500 relative z-20 duration-300 mb-2">
             {title}
           </h3>
-          <p className="text-blueGray-600 group-hover:text-violet-100 relative z-20 duration-300 text-sm leading-relaxed">
+          <p className="text-blueGray-600 group-hover:text-[#000] relative z-20 duration-300 text-sm leading-relaxed">
             {subtitle}
           </p>
         </div>

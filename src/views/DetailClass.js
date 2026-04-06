@@ -70,10 +70,10 @@ const reviews = { href: '#', average: 4, totalCount: 117 }
 
 const availableClass = [
     {
-        title: "Tilawah dan Tadabbur Al Qur'an", 
-        slug:'tilawah-dan-tadabbur-al-quran-1256', 
-        type: 'Remaja dan Anak-Anak', 
-        description: "Jadwal: Selasa, 12.30 wib bersama ustadzah pengampu Ustadzah Reza Hafidzahullah", 
+        title: "Tilawah dan Tadabbur Al Qur'an",
+        slug:'tilawah-dan-tadabbur-al-quran-1256',
+        type: 'Remaja dan Anak-Anak',
+        description: "Jadwal: Selasa, 12.30 wib bersama ustadzah pengampu Ustadzah Reza Hafidzahullah",
         price: '35000',
         href: '#',
         breadcrumbs: [
@@ -313,6 +313,7 @@ function classNames(...classes) {
 }
 
 const PAYMENT_URL = process.env.REACT_APP_PAYMENT_URL || "http://localhost:5050"
+const ORGZ_ID = process.env.REACT_APP_ORGZ_ID
 
 export default function DetailClass() {
     const [class_data, setClassData] = useState(product)
@@ -320,7 +321,7 @@ export default function DetailClass() {
     const [modal_open, setModalOpen] = useState(false)
     const [form_order, setFormOrder] = useState({
         names: [],
-        phone_number: '', 
+        phone_number: '',
         packet: class_data.packets[0].code,
         promo_code: '',
         discount: '',
@@ -339,7 +340,7 @@ export default function DetailClass() {
     console.log(id)
     // const names, phone_number, packet, promo_code, discount, totalPrice, class_name
     const navigate = useNavigate()
-    
+
     useEffect(() => {
         if(id){
             const data = availableClass.filter(i =>  i.slug == id)[0]
@@ -361,7 +362,7 @@ export default function DetailClass() {
     }, [id, class_data, form_order.names, form_order.packet, name])
 
     const classNames = (...classes) => {
-    return classes.filter(Boolean).join(' ')
+        return classes.filter(Boolean).join(' ')
     }
     const checkPromoCode = async () => {
         // || form_order.category == ''
@@ -377,7 +378,7 @@ export default function DetailClass() {
             setCheckPromoColor('[#ef4a44]')
             setCheckPromoIcon(XMarkIcon)
             setCheckPromoMessage(` Mohon pilih kategori kelas dan paket terlebih dahulu.`)
-            // <XMarkIcon></XMarkIcon>, 
+            // <XMarkIcon></XMarkIcon>,
 
         }
         // && promo_code.rules.includes(form_order.category)
@@ -389,16 +390,16 @@ export default function DetailClass() {
             form_order.totalPrice = class_data.price - promo_code.discount_nominal
             setCheckPromoMessage(` Kupon valid. Anda mendapat potongan sebesar ${form_order.discount}%.`)
             // setCheckPromoMessage(`Kupon valid. Anda mendapat potongan sebesar ${form_order.discount}%.`)
-            
+
         }else{
             setIsValidPromoCode(false)
             setCheckPromoColor('[#ef4a44]')
             setCheckPromoIcon(XMarkIcon)
             setCheckPromoMessage(` Kupon tidak valid.`)
-            // <XMarkIcon></XMarkIcon>, 
+            // <XMarkIcon></XMarkIcon>,
         }
         console.log(code, isValidPromoCode, checkPromoMessage)
-        
+
     }
 
     const handleNewNames = (newName) => {
@@ -435,7 +436,7 @@ export default function DetailClass() {
                 console.log('form_order', form_order)
                 // form_order[name] = value
             }
-            
+
         }
     }
 
@@ -473,13 +474,13 @@ export default function DetailClass() {
     const handlePay = async () => {
         const new_names = form_order.names.map((name,key) => form_order.names.join(`${key+1}${name}%0A`))
         // const new_names = form_order.names.map((name,key) => form_order.names.join(`${key+1}${name}%0A`))
-        console.log(new_names)
+        console.log('new_names', new_names)
         const data = {
-            price: form_order.price, 
-            full_name: form_order.names, 
+            price: form_order.price,
+            full_name: form_order.names,
             phone_number: form_order.phone_number,
-            class_name: form_order.class_name, 
-            packet: form_order.packet, 
+            class_name: form_order.class_name,
+            packet: form_order.packet,
             category: form_order.category,
             amount: 1,
             discount: form_order.discount,
@@ -488,17 +489,19 @@ export default function DetailClass() {
             // const { price, payment_method, va_number, full_name, class_name, packet, category } = req.body
         }
         try {
-            const invoice = await axios.post(`${PAYMENT_URL}/api/payments/request-invoices`, data)
+            const invoice = await axios.post(`${PAYMENT_URL}/api/payments/request-invoices`, data, { headers: {
+                'OI': ORGZ_ID
+            }})
                             .then(result => {
                                 console.log(result)
-                                if(result.status == 'ok')
+                                if(result.status == 200)
                                     navigate(result.data)
 
                             })
                             .catch(error => {
                                 console.log(error)
                             })
-            
+
         } catch (error) {
             console.log(error)
         }
@@ -690,20 +693,20 @@ export default function DetailClass() {
                             {/* <span className="text-sm font-medium uppercase text-gray-900 group-has-[:checked]:text-white">
                             {packet.name}
                             </span> */}
-                            
+
                         </label>
 
                             <button type='button' className='flex-grow w-1/3 text-white bg-blue-500 focus:bg-blue-500 rounded-md p-4 focus:ring-1 focus:ring-offset-2' onClick={() => checkPromoCode()} >Cek Kupon</button>
                         {/* <div className="mb-4"> */}
                             {/* <label htmlFor="promo_code" className="block mb-2.5 text-sm font-medium text-heading">No. Telepon (No WhatsApp Aktif)</label>
                             <input type="text" id="promo_code" onChange={(e) => handleFormData('category', e.target.value)} className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="example@company.com" required /> */}
-                            
+
                         </div>
                             <span className={`flex py-2 items-center text-sm text-${checkPromoColor}`}>
-                                {checkPromoMessage? 
-                                    isValidPromoCode ? 
+                                {checkPromoMessage?
+                                    isValidPromoCode ?
                                     (<CheckCircleIcon className='w-5'></CheckCircleIcon> )
-                                    : 
+                                    :
                                     (<FaRegCircleXmark className='w-5'></FaRegCircleXmark> )
                                 : ''}
                                 {checkPromoMessage}
@@ -772,14 +775,14 @@ export default function DetailClass() {
                         //     <input type="text" id="names" onChange={(e) => setFormOrder({names: [...form_order.names, e.target.value]})} className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Nama peserta" required />
                         // </div> */}
                     {(form_order.packet === '2p' || form_order.packet === '5p') && (
-                        
+
                         // <div className='flex justify-center'>
                         <>
                             <MultiTextInput handleNewNames={handleNewNames} setName={setName} name={name} label='Nama' errorMessage={errorMessage}></MultiTextInput>
                         </>
 
                         // </div>
-                        
+
                     )}
                     {/* <input key={i} type='text' value={values[i]} onChange={(e) => handleInput(e,i) } /> */}
                     {/* inputs.push(); */}
@@ -839,7 +842,8 @@ export default function DetailClass() {
                                 Diskon
                             </p>
                             <p className='text-base'>
-                                {form_order.promo_code? `${form_order.discount}%(Rp${promo_codes.find(promo_code => promo_code.code === form_order.promo_code).discount_nominal?.toLocaleString("id-ID")})` : '0%'}
+                                {/* {promo_codes.find(promo_code => promo_code.code === form_order.promo_code)} */}
+                                {/* {form_order.promo_code? `${form_order.discount}%(Rp${promo_codes.find(promo_code => promo_code.code === form_order.promo_code).discount_nominal?.toLocaleString("id-ID")})` : '0%'} */}
                             </p>
                         </div>
                     </div>
@@ -870,10 +874,10 @@ export default function DetailClass() {
                         <a href="#" className="ms-auto text-sm font-medium text-fg-brand hover:underline">Lost Password?</a>
                     </div> */}
 
-                    {/* <a 
-                        href={`https://api.whatsapp.com/send?phone=6285216527392&text=Assalamu%27alaikum%2C%20tim%20RQA%2C%20ana%20ingin%20mendaftar%20kelas%20-${form_order.class_name}-%20untuk%20paket%20-${form_order.packet}-%3A%0A${form_order.names}%0A%0ANomor%20WA%3A%20${form_order.phone_number}%0AKode%20Promo%3A%20${form_order.promo_code?form_order.promo_code`(${form_order.discount}%)`:'-'}%20%20%0ATotal%20Bayar%3A%20Rp${formatCurrency(form_order?.totalPrice, 'IDR')}%0A%0AJazaakumullahu%20khayran.`} 
+                    {/* <a
+                        href={`https://api.whatsapp.com/send?phone=6285216527392&text=Assalamu%27alaikum%2C%20tim%20RQA%2C%20ana%20ingin%20mendaftar%20kelas%20-${form_order.class_name}-%20untuk%20paket%20-${form_order.packet}-%3A%0A${form_order.names}%0A%0ANomor%20WA%3A%20${form_order.phone_number}%0AKode%20Promo%3A%20${form_order.promo_code?form_order.promo_code`(${form_order.discount}%)`:'-'}%20%20%0ATotal%20Bayar%3A%20Rp${formatCurrency(form_order?.totalPrice, 'IDR')}%0A%0AJazaakumullahu%20khayran.`}
                         className="block text-white text-center text-base bg-amber-600 box-border border border-transparent rounded-md my-3 hover:bg-amber-700 focus:ring-4 focus:ring-brand-medium shadow-xs leading-5 rounded-base font-medium px-4 py-2.5 focus:outline-none w-full mb-3">Daftar</a> */}
-                        <button onClick={() => handleRegist()} className="block text-white text-center text-base bg-amber-600 box-border border border-transparent rounded-md my-3 hover:bg-amber-700 focus:ring-4 focus:ring-brand-medium shadow-xs leading-5 rounded-base font-medium px-4 py-2.5 focus:outline-none w-full mb-3">Bayar</button>
+                        <button onClick={() => handlePay()} className="block text-white text-center text-base bg-amber-600 box-border border border-transparent rounded-md my-3 hover:bg-amber-700 focus:ring-4 focus:ring-brand-medium shadow-xs leading-5 rounded-base font-medium px-4 py-2.5 focus:outline-none w-full mb-3">Bayar</button>
                     {/* <div className="text-sm font-medium text-bo dy">Not registered? <a href="#" className="text-fg-brand hover:underline">Create account</a></div> */}
                 </form>
             </Modal>
@@ -917,7 +921,7 @@ export default function DetailClass() {
             </div>
         </div>
         </div>
-        
+
         </main>
         <Footer />
     </>

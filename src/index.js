@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter as Router, Route, Routes, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
 
 import {Provider} from 'react-redux'
 import { persistor, store } from './redux/store';
@@ -25,7 +25,7 @@ root.render(
         <PersistGate loading={null} persistor={persistor}>
           <Router>
               <App />
-              <Admin/>
+              {/* <Admin/> */}
           </Router>
           {/* <App /> */}
         </PersistGate>

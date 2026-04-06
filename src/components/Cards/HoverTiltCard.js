@@ -74,7 +74,7 @@ const HoverTiltCard = ({featured_image, title, description}) => {
         transformStyle: "preserve-3d",
         transform,
       }}
-      className=" relative w-full md:w-4/12 flex h-96 w-72 my-2 mx-2 rounded-xl bg-gradient-to-br from-[#9dd7fc] indigo-300 to-[#bfe6ff]"
+      className=" relative w-full md:w-4/12 flex h-96 w-72 my-2 mx-2 rounded-xl bg-blue-300 indigo-300 "
     >
       {/* <div
         style={{

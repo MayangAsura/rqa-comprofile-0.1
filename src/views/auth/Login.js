@@ -10,7 +10,7 @@ import {login, resetInfo} from '../../redux/authSlice'
 const BASE_URL = process.env.REACT_APP_SERVER_MODE === 'development'? process.env.REACT_APP_LOCAL_URL : process.env.REACT_APP_PROD_URL
 
 export default function Login() {
-  const { userInfo, orgzInfo } = useSelector(state => state.authReducer)
+  const { userInfo, userEmail, orgzInfo } = useSelector(state => state.authReducer)
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const dispatch = useDispatch()
@@ -18,7 +18,7 @@ export default function Login() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if(userInfo){
+    if(userEmail){
       navigate('/admin')
     }
 
