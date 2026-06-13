@@ -8,8 +8,10 @@ import MultiTextInput from '../components/Texts/MultiText.js'
 import { CheckCircleIcon, TrashIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { FaRegCircleXmark} from 'react-icons/fa6'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
 import { formatCurrency } from "utils/formatCurrency";
+import { formatDate } from 'utils/formatIndonesiaDate'
 
 const product = {
   name: 'At Tibyan Jilid 1',
@@ -318,6 +320,8 @@ const PAYMENT_URL = process.env.REACT_APP_PAYMENT_URL || "http://localhost:5050"
 const ORGZ_ID = process.env.REACT_APP_ORGZ_ID
 
 export default function DetailClass() {
+    const location = useLocation()
+    const id = location.pathname.split("/")[2]
     const [class_data, setClassData] = useState(product)
     const [order_data, setOrderData] = useState({})
     const [modal_open, setModalOpen] = useState(false)
@@ -327,8 +331,9 @@ export default function DetailClass() {
         packet: class_data.packets[0].code,
         promo_code: '',
         discount: '',
-        totalPrice: class_data.price,
+        total_price: class_data.price,
         class_name: class_data.name,
+        class_id: id,
         admin_fee: 0
     })
     const [name, setName] = useState("")
@@ -337,10 +342,8 @@ export default function DetailClass() {
     const [checkPromoColor, setCheckPromoColor] = useState('[#14873e]')
     const [checkPromoIcon, setCheckPromoIcon] = useState(CheckCircleIcon)
     const [errorMessage, setErrorMessage] = useState('')
-    const location = useLocation()
-    const id = location.pathname.split("/")[2]
-    console.log(id)
-    // const names, phone_number, packet, promo_code, discount, totalPrice, class_name
+    const [snap, setSnap] = useState(window.snap || "")
+    // const names, phone_number, packet, promo_code, discount, total_price, class_name
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -389,7 +392,7 @@ export default function DetailClass() {
             setCheckPromoColor('[#14873e]')
             const promo_code = promo_codes.find(promo_code => promo_code.code == code)
             form_order.discount = promo_code.discount_amount
-            form_order.totalPrice = class_data.price - promo_code.discount_nominal
+            form_order.total_price = class_data.price - promo_code.discount_nominal
             setCheckPromoMessage(` Kupon valid. Anda mendapat potongan sebesar ${form_order.discount}%.`)
             // setCheckPromoMessage(`Kupon valid. Anda mendapat potongan sebesar ${form_order.discount}%.`)
 
@@ -446,36 +449,80 @@ export default function DetailClass() {
         const new_names = form_order.names.map((name,key) => form_order.names.join(`${key+1}${name}%0A`))
         console.log(new_names)
         // setModalOpen(true)
-        window.location.href= `https://api.whatsapp.com/send?phone=6285216527392&text=Assalamu%27alaikum%2C%20tim%20RQA%2C%20ana%20ingin%20mendaftar%20kelas%20-${form_order.class_name}-%20untuk%20paket%20-${form_order.packet}-%3A%0A${new_names}%0ANomor%20WA%3A%20-${form_order.phone_number}-%0AKode%20Promo%3A%20-${form_order.promo_code}-%20(-Rp-${form_order.discount}-)%20%0ATotal%20Bayar%3A%20-${form_order.totalPrice}-%0A%0AJazaakumullahu%20khayran.`
-        // navigate(`https://api.whatsapp.com/send?phone=6285216527392&text=Assalamu%27alaikum%2C%20tim%20RQA%2C%20ana%20ingin%20mendaftar%20kelas%20-${class_name}-%20untuk%20paket%20-${packet}-%3A%0A${new_names}%0ANomor%20WA%3A%20-${phone_number}-%0ATotal%20Bayar%3A%20Rp-${totalPrice}-%0AJazaakumullahu%20khayran.`)
+        window.location.href= `https://api.whatsapp.com/send?phone=6285216527392&text=Assalamu%27alaikum%2C%20tim%20RQA%2C%20ana%20ingin%20mendaftar%20kelas%20-${form_order.class_name}-%20untuk%20paket%20-${form_order.packet}-%3A%0A${new_names}%0ANomor%20WA%3A%20-${form_order.phone_number}-%0AKode%20Promo%3A%20-${form_order.promo_code}-%20(-Rp-${form_order.discount}-)%20%0ATotal%20Bayar%3A%20-${form_order.total_price}-%0A%0AJazaakumullahu%20khayran.`
+        // navigate(`https://api.whatsapp.com/send?phone=6285216527392&text=Assalamu%27alaikum%2C%20tim%20RQA%2C%20ana%20ingin%20mendaftar%20kelas%20-${class_name}-%20untuk%20paket%20-${packet}-%3A%0A${new_names}%0ANomor%20WA%3A%20-${phone_number}-%0ATotal%20Bayar%3A%20Rp-${total_price}-%0AJazaakumullahu%20khayran.`)
         // 1.%20Nama%201%0A2.%20Nama%202
     }
 
     const handlePay = async () => {
-        const new_names = form_order.names.map((name,key) => form_order.names.join(`${key+1}${name}%0A`))
+        console.log('form_order', form_order.names)
+        const new_names = name? name : form_order.names.map((name,key) => form_order.names.join(`${key+1``}${name}%0A`))
         // const new_names = form_order.names.map((name,key) => form_order.names.join(`${key+1}${name}%0A`))
-        console.log('new_names', new_names)
+        // console.log('new_names', new_names, ORGZ_ID)
+        form_order.names.push(name)
+
         const data = {
-            price: form_order.price,
-            full_name: form_order.names,
+            total_price: form_order.total_price,
+            participants: form_order.names,
             phone_number: form_order.phone_number,
             class_name: form_order.class_name,
+            class_id: form_order.class_id,
             packet: form_order.packet,
             category: form_order.category,
+            type: 'CLASS',
             amount: 1,
-            discount: form_order.discount,
+            discount: form_order.discount || 0,
             promo_code: form_order.promo_code,
             admin_fee: form_order.admin_fee
             // const { price, payment_method, va_number, full_name, class_name, packet, category } = req.body
         }
+
+        console.log('data', data)
         try {
-            const invoice = await axios.post(`${PAYMENT_URL}/api/payments/request-invoices`, data, { headers: {
-                'OI': ORGZ_ID
+            await axios.post(`${PAYMENT_URL}/api/payments/request-invoices`, data, { headers: {
+                OI: ORGZ_ID
             }})
                             .then(result => {
-                                console.log(result)
-                                if(result.status == 200)
-                                    navigate(result.data)
+                                console.log('result', result.data.data.token)
+                                if(result.status == 200){
+                                    console.log(result.status)
+                                    setFormOrder((form_order, key) => key==='name'? {...form_order, names: []} : {...form_order, [key]: ""})
+                                    setName("")
+                                    console.log('form_order:', form_order)
+
+                                    setModalOpen(false)
+
+                                    const payment_url = result.data.data.payment_url
+                                    const payment_transaction_date = result.data.data.transaction_date
+                                    // const payment_expired_at = result.data.data.expired_at
+
+                                    snap.pay(result.data.data.token, {
+                                        onSuccess: function(result){
+                                            console.log('success');
+                                            console.log(result);
+                                            toast.success('Pembayaran Berhasil!, Anda akan mendapatkan ringkasan pembayaran')
+                                            window.location.href= `https://api.whatsapp.com/send?phone=${form_order.phone_number}&text=Bismillah%2C%20Alhamdulllah%20Anda%20sudah%20terdaftar%20di%20kelas%20-${form_order.class_name}-%20untuk%20paket%20-${form_order.packet}-.%0APeserta%20Terdaftar%3A%0A${new_names}%0ANomor%20WA%3A%20-${form_order.phone_number}-%0AKode%20Promo%3A%20-${form_order.promo_code}-%20(-Rp-${form_order.discount}-)%20%0ATotal%20Bayar%3A%20-${form_order.total_price}-%0A%0AJazaakumullahu%20khayran.`
+                                            // window.location.href= `https://api.whatsapp.com/send?phone=${form_order.phone_number}&text=Assalamu%27alaikum%2C%20tim%20RQA%2C%20ana%20ingin%20mendaftar%20kelas%20-${form_order.class_name}-%20untuk%20paket%20-${form_order.packet}-%3A%0A${new_names}%0ANomor%20WA%3A%20-${form_order.phone_number}-%0AKode%20Promo%3A%20-${form_order.promo_code}-%20(-Rp-${form_order.discount}-)%20%0ATotal%20Bayar%3A%20-${form_order.total_price}-%0A%0AJazaakumullahu%20khayran.`
+                                            // navigate('/order-history')
+                                        },
+                                        onPending: function(result){
+                                            console.log('pending');console.log(result);
+                                            toast.info('Navigating to order history')
+                                            window.location.href= `https://api.whatsapp.com/send?phone=6285261527392&text=Bismillah%2C%20Jazaakumullahu%20khayran%20telah%20mendaftar%20di%20kelas%20-${form_order.class_name}-%20untuk%20paket%20-${form_order.packet}-.%0ABerikut%20invoice%20pembayaran%20kelas%3A%0A%0A%3D%3DInvoice%3D%3D%0ATanggal%20Transaksi%3A%20-${formatDate(payment_transaction_date)}-%0APeserta%20Terdaftar%3A%0A${new_names}0ANomor%20WA%3A%20-${form_order.phone_number}-%0AKode%20Promo%3A%20-${form_order.promo_code}-%20(-Rp-${form_order.discount}-)%20%0A%0ATotal%20Bayar%3A%20-${form_order.total_price}-%0AHalaman%20Pembayaran%3A%20-${payment_url}-%0A%0A!%3A%20Mohon%20lakukan%20pembayaran%20sebelum%20waktu%20tenggat%20yang%20tertera%20di%20halaman%20pembayaran.%0A%0AJazaakumullahu%20khayran.`
+                                            // navigate('/order-history')
+                                        },
+                                        onError: function(result){
+                                            console.log('error');console.log(result);
+                                            toast.error('Error, Error request invoice')
+                                        },
+                                        onClose: function(){
+                                        console.log('customer closed the popup without finishing the payment');
+                                        navigate('/order-history')
+                                        }
+                                    })
+                                    }
+                                // }
+                                    // navigate(result.data)
 
                             })
                             .catch(error => {
@@ -485,7 +532,7 @@ export default function DetailClass() {
         } catch (error) {
             console.log(error)
         }
-        // https://api.whatsapp.com/send?phone=6285216527392&text=Assalamu%27alaikum%2C%20tim%20RQA%2C%20ana%20ingin%20mendaftar%20kelas%20-${form_order.class_name}-%20untuk%20paket%20-${form_order.packet}-%3A%0A${form_order.names}%0A%0ANomor%20WA%3A%20${form_order.phone_number}%0AKode%20Promo%3A%20${form_order.promo_code?form_order.promo_code`(${form_order.discount}%)`:'-'}%20%20%0ATotal%20Bayar%3A%20Rp${formatCurrency(form_order?.totalPrice, 'IDR')}%0A%0AJazaakumullahu%20khayran.
+        // https://api.whatsapp.com/send?phone=6285216527392&text=Assalamu%27alaikum%2C%20tim%20RQA%2C%20ana%20ingin%20mendaftar%20kelas%20-${form_order.class_name}-%20untuk%20paket%20-${form_order.packet}-%3A%0A${form_order.names}%0A%0ANomor%20WA%3A%20${form_order.phone_number}%0AKode%20Promo%3A%20${form_order.promo_code?form_order.promo_code`(${form_order.discount}%)`:'-'}%20%20%0ATotal%20Bayar%3A%20Rp${formatCurrency(form_order?.total_price, 'IDR')}%0A%0AJazaakumullahu%20khayran.
     }
   return (
     <>
@@ -710,7 +757,7 @@ export default function DetailClass() {
                                 <p className='text-xl line-through'>
                                     {`${formatCurrency(class_data?.price, 'IDR')}`}
                                 </p>
-                                {`${formatCurrency(form_order?.totalPrice, 'IDR')}`}
+                                {`${formatCurrency(form_order?.total_price, 'IDR')}`}
                             </p>
                             </>
                         )}
@@ -747,7 +794,7 @@ export default function DetailClass() {
                     {form_order.packet === '1p' && (
                         <div className="mb-4">
                             <label htmlFor="names" className="block mb-2.5 text-sm font-medium text-heading">Nama</label>
-                            <input type="text" id="names" onChange={(e) => handleFormData('names', e.target.value)} className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Nama peserta" required />
+                            <input type="text" id="names" onChange={(e) => setName(e.target.value)} className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Nama peserta" required />
                         </div>
                     )}
                     {/* // <div className="mb-4">
@@ -779,20 +826,20 @@ export default function DetailClass() {
                     }
 
                     </div>
-                    {/* names, phone_number, packet, promo_code, discount, totalPrice, class_name */}
+                    {/* names, phone_number, packet, promo_code, discount, total_price, class_name */}
                     <div className="mb-4">
                         <label htmlFor="phone_number" className="block mb-2.5 text-sm font-medium text-heading">No. Telepon (No WhatsApp Aktif)</label>
                         <input type="text" id="phone_number" onChange={(e) => handleFormData('phone_number', e.target.value)} className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="08123456789" required />
                     </div>
                     <div className="mb-4">
                         <label htmlFor="domicile" className="block mb-2.5 text-sm font-medium text-heading">Kota Domisili</label>
-                        <select type="text" id="domicile" onChange={(e) => handleFormData('domicile', e.target.value)} className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="08123456789">
-
+                        <select type="text" id="domicile" onChange={(e) => handleFormData('domicile', e.target.value)} className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body">
+                            <option value="005">Jepara </option>
                         </select>
                     </div>
                     <div className="mb-4">
                         <label htmlFor="job" className="block mb-2.5 text-sm font-medium text-heading">Pekerjaan/Kegiatan</label>
-                        <input type="text" id="job" onChange={(e) => handleFormData('job', e.target.value)} className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="08123456789" required />
+                        <input type="text" id="job" onChange={(e) => handleFormData('job', e.target.value)} className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Swasta" required />
                     </div>
                     {/* Divider */}
                     <div className="border-b border-default">
@@ -823,7 +870,7 @@ export default function DetailClass() {
                             </p>
                             <p className='text-base'>
                                 {/* {promo_codes.find(promo_code => promo_code.code === form_order.promo_code)} */}
-                                {/* {form_order.promo_code? `${form_order.discount}%(Rp${promo_codes.find(promo_code => promo_code.code === form_order.promo_code).discount_nominal?.toLocaleString("id-ID")})` : '0%'} */}
+                                {form_order.promo_code? `${form_order.discount}%(Rp${promo_codes.find(promo_code => promo_code.code === form_order.promo_code).discount_nominal?.toLocaleString("id-ID")})` : '0%'}
                             </p>
                         </div>
                     </div>
@@ -834,7 +881,7 @@ export default function DetailClass() {
                                 Total Harga
                             </p>
                             <p className='text-2xl'>
-                                {`${formatCurrency(form_order?.totalPrice, 'IDR')}`}
+                                {`${formatCurrency(form_order?.total_price, 'IDR')}`}
                             </p>
                         </div>
                     </div>
@@ -855,7 +902,7 @@ export default function DetailClass() {
                     </div> */}
 
                     {/* <a
-                        href={`https://api.whatsapp.com/send?phone=6285216527392&text=Assalamu%27alaikum%2C%20tim%20RQA%2C%20ana%20ingin%20mendaftar%20kelas%20-${form_order.class_name}-%20untuk%20paket%20-${form_order.packet}-%3A%0A${form_order.names}%0A%0ANomor%20WA%3A%20${form_order.phone_number}%0AKode%20Promo%3A%20${form_order.promo_code?form_order.promo_code`(${form_order.discount}%)`:'-'}%20%20%0ATotal%20Bayar%3A%20Rp${formatCurrency(form_order?.totalPrice, 'IDR')}%0A%0AJazaakumullahu%20khayran.`}
+                        href={`https://api.whatsapp.com/send?phone=6285216527392&text=Assalamu%27alaikum%2C%20tim%20RQA%2C%20ana%20ingin%20mendaftar%20kelas%20-${form_order.class_name}-%20untuk%20paket%20-${form_order.packet}-%3A%0A${form_order.names}%0A%0ANomor%20WA%3A%20${form_order.phone_number}%0AKode%20Promo%3A%20${form_order.promo_code?form_order.promo_code`(${form_order.discount}%)`:'-'}%20%20%0ATotal%20Bayar%3A%20Rp${formatCurrency(form_order?.total_price, 'IDR')}%0A%0AJazaakumullahu%20khayran.`}
                         className="block text-white text-center text-base bg-amber-600 box-border border border-transparent rounded-md my-3 hover:bg-amber-700 focus:ring-4 focus:ring-brand-medium shadow-xs leading-5 rounded-base font-medium px-4 py-2.5 focus:outline-none w-full mb-3">Daftar</a> */}
                         <button onClick={() => handlePay()} className="block text-white text-center text-base bg-amber-600 box-border border border-transparent rounded-md my-3 hover:bg-amber-700 focus:ring-4 focus:ring-brand-medium shadow-xs leading-5 rounded-base font-medium px-4 py-2.5 focus:outline-none w-full mb-3">Bayar</button>
                     {/* <div className="text-sm font-medium text-bo dy">Not registered? <a href="#" className="text-fg-brand hover:underline">Create account</a></div> */}

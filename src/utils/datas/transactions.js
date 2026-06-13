@@ -47,7 +47,7 @@ export const data= {
 		}
 	},
 	'Pelanggan': {
-		values: datas.map(order => order.orgz_users.full_name),
+		values: datas.map(order => order.orgz_users?.full_name || '-'),
 		classNames: (value) =>
 			value === "Jane Smith" || value === "Emma Martinez"
 				? "text-green-400 font-medium"
@@ -108,7 +108,7 @@ export const data= {
 		},
 	},
 	Paket: {
-		values: datas.map(order => order.orgz_packets.name),
+		values: datas.map(order => order.orgz_packets?.name || '-'),
 		classNames: (value) =>
 			datas['orgz_packets.code'] === "1p"
 				? "px-3 py-2 rounded rounded-lg bg-green-500"

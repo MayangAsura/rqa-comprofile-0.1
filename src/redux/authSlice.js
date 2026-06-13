@@ -10,6 +10,8 @@ let initialState = {
     error: false,
     errorMessage: "",
     userInfo: null,
+    userEmail: null,
+    role: null,
     orgzInfo: {
       orgz_id: null,
       orgz_name: null
@@ -27,28 +29,43 @@ const LOCAL_URL = process.env.REACT_APP_LOCAL_URL
 
 export const login = createAsyncThunk(
   '/api/auth/login',
-  async (data) => {
-    await axios.post(`${BASE_URL}/api/auth/login`, data)
+  async (payload, {rejectWithValue}) => {
+    await axios.post(`${BASE_URL}/api/auth/login`, {username: payload.username, password: payload.password, role: payload.role})
           .then(result => {
-            console.log('result', result.data.data)
+            console.log('result', result.data.data, result.status)
             if(result.status === 200){
+              console.log('in fulfilled')
 
               Cookies.set('token', result.data.data.token)
-              // this.iniatialState.userInfo = {
-              //   username: result.data.data.username,
-              //   full_name: result.data.data.full_name,
-              // }
-              // this.initialState.orgzInfo.orgz_id= result.data.data.orgz_id
-              // this.initialState.orgzInfo.orgz_name= result.data.data.orgz_id
-              //   ,
-              //   org_name: result.data.data.orgz_name,
-              // }
-              // toast('Alhamdulillah, Anda berhasil login.')
+
+              toast.success('Berhasil, Login berhasil.')
+
               return result.data.data
+            }else{
+              console.log('in reject')
+              toast.error('Gagal, Login gagal.')
+              return rejectWithValue(result.data.data.error)
             }
+            // if(result.status === 200){
+
+            //   // Cookies.set('token', result.data.data.token)
+            //   this.iniatialState.userInfo = {
+            //     username: result.data.data.username,
+            //     full_name: result.data.data.full_name,
+            //   }
+            //   this.initialState.orgzInfo.orgz_id= result.data.data.orgz_id
+            //   this.initialState.orgzInfo.orgz_name= result.data.data.orgz_id
+            //   //   ,
+            //   //   org_name: result.data.data.orgz_name,
+            //   // }
+            //   // toast('Alhamdulillah, Anda berhasil login.')
+            //   return result.data.data
+            // }
           })
           .catch(error => {
-            // console.log(error)
+            console.log('in error', error)
+            toast.error('Gagal, Login gagal.')
+            return rejectWithValue(error)
             // toast('Afwan, Error ketika login.')
             // this.state.error = true
             // this.state.errorMessage = 'Persist login error: ' + error
@@ -137,8 +154,12 @@ export const authSlice = createSlice({
         Cookies.remove('token')
     },
     logout: (state, action) => {
+
+        console.log('in logout action')
         state.userInfo = null
         state.orgzInfo = null
+        state.userEmail = null
+        state.role = null
         Cookies.remove('token')
     }
     // addToCart: async (state, action) => {
@@ -190,18 +211,30 @@ export const authSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(
       login.fulfilled, (state, action) => {
-        console.log('action.payload', action.payload)
-        Cookies.set('token', action.payload.token)
-        state.userInfo = {
-          username: action.payload.username,
-          full_name: action.payload.full_name,
+        state.error = false
+        console.log('action.payload', action)
+        // // Cookies.set('token', action.payload.token)
+
+        const token = Cookies.get('token')
+
+        if(token){
+          state.userInfo = {
+            username: action.meta.arg.username,
+            // full_name: action.meta.full_name,
+          }
+          state.userEmail = action.meta.arg.username
+          state.role = action.meta.arg.role
         }
-        state.userEmail = action.payload.username
-        state.orgzInfo = {
-          orgz_id: action.payload.orgz_id,
-          org_name: action.payload.orgz_name,
-        }
-        state.orgzId = action.payload.orgz_id
+        // state.orgzInfo = {
+        //   orgz_id: action.payload.orgz_id,
+        //   org_name: action.payload.orgz_name,
+        // }
+        // state.orgzId = action.payload.orgz_id
+      }
+    )
+    .addCase(
+      login.rejected, (state, action) => {
+        state.error = true
       }
     )
   }
@@ -209,6 +242,13 @@ export const authSlice = createSlice({
 
 export const {
   login_,
-  resetInfo
+  logout,
+  role,
+  resetInfo,
+  error,
+  userInfo,
+  orgzId,
+  orgzInfo,
+  userEmail
 } = authSlice.actions;
 export default authSlice.reducer;

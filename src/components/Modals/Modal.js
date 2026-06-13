@@ -6,10 +6,11 @@ import {useEffect } from 'react'
 // </button>
 
 // <!-- Main modal -->
-const Modal = ({isOpen, onClose, children, form_order}) => {
+const Modal = ({isOpen, onClose, children, title, form_order, form_field}) => {
     useEffect(() => {
         console.log('form_order from modal', form_order)
-    }, [form_order.packet])
+        console.log('form_field from modal', form_field)
+    }, [form_order?.packet])
     if(!isOpen) return null
     return (
 
@@ -22,10 +23,10 @@ const Modal = ({isOpen, onClose, children, form_order}) => {
                 {/* <!-- Modal header --> */}
                 <div className="flex items-center justify-between border-b border-default pb-4 md:pb-5">
                     <h3 className="text-lg font-medium text-heading">
-                        Formulir Pendaftaran
+                        {title}
                     </h3>
                     <button type="button" className="text-body bg-transparent hover:bg-neutral-tertiary hover:text-heading rounded-base text-sm w-9 h-9 ms-auto inline-flex justify-center items-center" data-modal-hide="authentication-modal"
-                        onClick={onClose}    
+                        onClick={onClose}
                     >
                         <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18 17.94 6M18 18 6.06 6"/></svg>
                         <span className="sr-only">Close modal</span>
@@ -35,7 +36,7 @@ const Modal = ({isOpen, onClose, children, form_order}) => {
                 {children}
             </div>
         </div>
-    </div> 
+    </div>
     )
 
 }

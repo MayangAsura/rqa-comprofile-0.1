@@ -51,28 +51,36 @@ import DetailWithDraws from 'views/admin/DetailWithdraws.js';
 
 function App() {
 
-    const {userInfo, orgzInfo} = useSelector(state => state.authReducer)
-    const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const {userInfo, orgzInfo, userEmail, role} = useSelector(state => state.authReducer)
+    const navigate = useNavigate()
+    // const [session, setSession] = useState({
+    //   role: ""
+    // })
 
     useEffect(() => {
-      console.log('isAuthenticated', isAuthenticated)
-      console.log('userInfo', userInfo)
-      if(userInfo){
-        setIsAuthenticated(true)
-        console.log('userInfo-', userInfo)
-        console.log('isAuthenticated-', isAuthenticated)
+      // console.log('session', session)
+      console.log('userInfo', userInfo, userEmail)
+      console.log('role', role)
+      // if(userEmail){
+      //   setIsAuthenticated(true)
+      //   console.log('userInfo-', userInfo)
+      //   console.log('isAuthenticated-', isAuthenticated)
+      if(userEmail && role == 'admin'){
+        navigate('/admin')
       }
-    }, [userInfo])
+      // else if(!userEmail){
+      //   navigate('/')
+      // }
+      // else{
+      //   navigate('/admin/login')
+      // }
+      // }
+    }, [userEmail, role])
 
     return (
     <>
-      <Helmet>
-          {/* <script src='https://app-sandbox.duitku.com/lib/js/duitku.js'></script>
-          <script src='https://app-prod.duitku.com/lib/js/duitku.js'></script>
-          <script src="../path/to/flowbite/dist/flowbite.min.js"></script> */}
-      </Helmet>
       <Routes>
-        {/* Routes with Layout */}
+          {/* Routes with Layout */}
         <Route path="/admin" element={<Admin />} >
           <Route index element={<Dashboard/>}  />
           <Route path="/admin/dashboard" element={<Dashboard/>} />
@@ -85,11 +93,12 @@ function App() {
           <Route path="/admin/transactions" element={<Transactions/>} />
           <Route path="/admin/transactions/:id" element={<DetailTransactions/>} />
           <Route path="/admin/balances" element={<WithDraws/>} />
-          <Route path="/admin/balances/:wn" element={<DetailWithDraws/>} />
+          <Route path="/admin/balances/:id" element={<DetailWithDraws/>} />
           <Route path="/admin/account" element={<Profile/>} />
           <Route path="/admin/change-password" element={<ChangePassword/>} />
         </Route>
         <Route path="/admin/login" element={<Login/>} />
+
         <Route path="/login" component={<Auth />} />
 
         <Route exact path="/" element={<Landing />} />

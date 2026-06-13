@@ -12,19 +12,21 @@ import "assets/styles/tailwind.css";
 import App from './App'
 import { Helmet } from "react-helmet";
 import Admin from "layouts/Admin";
+import { ToastContainer } from "react-toastify";
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <>
   <React.StrictMode>
-    
+
     {/* <Suspense f allback={<SuspenseContent />}> */}
       {/* <AuthProvider> */}
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <Router>
               <App />
+              <ToastContainer style={{zIndex: 1000}} hideProgressBar={true} />
               {/* <Admin/> */}
           </Router>
           {/* <App /> */}

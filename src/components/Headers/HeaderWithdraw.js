@@ -90,7 +90,7 @@ export default function HeaderWithdraw() {
     let { data: orgz_cash_flows, error } = await supabase
                                       .from('orgz_cash_flows')
                                       .select(`
-                                        last_withdraw.sum(),
+                                        last_debit.sum(),
                                         orgz_identities (
                                           orgz_id
                                         )
@@ -119,8 +119,8 @@ export default function HeaderWithdraw() {
                 <CardStats
                   statSubtitle="Saldo"
                   statTitle={balance}
-                  statArrow="up"
-                  statPercent="3.48"
+                  // statArrow="up"
+                  // statPercent="3.48"
                   statPercentColor="text-emerald-500"
                   statDescription="1 pekan terakhir"
                   statIconName="far fa-chart-bar"
@@ -143,8 +143,8 @@ export default function HeaderWithdraw() {
                 <CardStats
                   statSubtitle="Total Kredit"
                   statTitle={total_credit}
-                  statArrow="down"
-                  statPercent="1.10"
+                  // statArrow="down"
+                  // statPercent="1.10"
                   statPercentColor="text-orange-500"
                   statDescription="Since yesterday"
                   statIconName="fas fa-users"

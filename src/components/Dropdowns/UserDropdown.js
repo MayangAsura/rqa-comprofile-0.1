@@ -1,20 +1,41 @@
-import React from "react";
+import React, {useState} from "react";
 import { createPopper } from "@popperjs/core";
+import { logout } from "../../redux/authSlice";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import axios from "axios";
+
+const BASE_URL = process.env.REACT_APP_SERVER_MODE === 'development'? process.env.REACT_APP_LOCAL_SERVER_URL : process.env.REACT_APP_API_PROD_SERVER_URL
 
 const UserDropdown = () => {
   // dropdown props
-  const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
+  const [dropdownPopoverShow, setDropdownPopoverShow] = useState(false);
   const btnDropdownRef = React.createRef();
   const popoverDropdownRef = React.createRef();
+  const dispatch = useDispatch()
+
   const openDropdownPopover = () => {
+    setDropdownPopoverShow(true);
     createPopper(btnDropdownRef.current, popoverDropdownRef.current, {
       placement: "bottom-start",
     });
-    setDropdownPopoverShow(true);
   };
   const closeDropdownPopover = () => {
     setDropdownPopoverShow(false);
   };
+
+  const handleLogout = async (e) => {
+    try {
+
+      await axios.get(`${BASE_URL}/api/auth/logout`, {withCredentials: true})
+                  .then(result => {
+                    dispatch(logout())
+                  })
+    } catch (error) {
+      toast.error()
+    }
+  }
   return (
     <>
       <a
@@ -43,25 +64,27 @@ const UserDropdown = () => {
           "bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
         }
       >
-        <a
+        <Link
+          to={"/account"}
+          // href="#pablo"
+          className={
+            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
+          }
+          // onClick={(e) => e.preventDefault()}
+        >
+          Profile
+        </Link>
+        <Link
+          to={"/change-password"}
           href="#pablo"
           className={
             "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
           }
-          onClick={(e) => e.preventDefault()}
+          // onClick={(e) => ()}
         >
-          Action
-        </a>
-        <a
-          href="#pablo"
-          className={
-            "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
-          }
-          onClick={(e) => e.preventDefault()}
-        >
-          Another action
-        </a>
-        <a
+          Reset Password
+        </Link>
+        {/* <a
           href="#pablo"
           className={
             "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
@@ -69,16 +92,16 @@ const UserDropdown = () => {
           onClick={(e) => e.preventDefault()}
         >
           Something else here
-        </a>
+        </a> */}
         <div className="h-0 my-2 border border-solid border-blueGray-100" />
         <a
           href="#pablo"
           className={
             "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
           }
-          onClick={(e) => e.preventDefault()}
+          onClick={(e) => handleLogout(e.preventDefault())}
         >
-          Seprated link
+          Logout
         </a>
       </div>
     </>

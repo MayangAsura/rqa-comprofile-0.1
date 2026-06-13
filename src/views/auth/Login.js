@@ -21,7 +21,10 @@ export default function Login() {
     if(userEmail){
       navigate('/admin')
     }
-    if(error){console.log('error', error)}
+    // if(!error){
+    //   console.log('error', error)
+    //   navigate('/admin')
+    // }
     if(userInfo){console.log('userInfo', userInfo, userEmail)}
 
   }, [userInfo, userEmail, error, navigate])
@@ -38,7 +41,7 @@ export default function Login() {
       //                 toast('Afwan, login Anda gagal!')
       //               }
       //             })
-      dispatch(login({username, password}))
+      dispatch(login({username, password, role: 'admin'}))
 
       console.log('userInfo', userInfo)
     } catch (error) {

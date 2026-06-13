@@ -11,6 +11,7 @@ import { data } from "utils/datas/withdraws.js";
 import { toast } from "react-toastify";
 import supabase from "configs/supabase.js";
 import HeaderTrans from "components/Headers/HeaderTrans.js";
+import HeaderWithdraw from "components/Headers/HeaderWithdraw.js";
 
 export default function WithDraws() {
   const [datas, setDatas] = useState([])
@@ -26,7 +27,7 @@ export default function WithDraws() {
   },[data])
   return (
     <>
-      <HeaderTrans/>
+      <HeaderWithdraw/>
       <div className="flex flex-wrap">
         {/* <div className="w-full mb-12 px-4">
           <CardTable />
@@ -39,6 +40,7 @@ export default function WithDraws() {
           <NewDataTable
             data={datas}
             type='withdraws'
+            addNew
             searchBar
             excelExport
             pageSizeControl

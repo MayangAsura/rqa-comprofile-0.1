@@ -35,7 +35,7 @@ export default function Profile() {
                                   .single()
     // userInfo.username
     if(orgz_users){
-      setUsers({full_name: orgz_users.full_name, email: orgz_users.email, password: orgz_users.password, phone_number: orgz_users.phone_number, job: orgz_users.phone_number, avatar: orgz_users.avatar, is_active: orgz_users.is_active})
+      setUsers({full_name: orgz_users.full_name, email: orgz_users.email, password: orgz_users.password, phone_number: orgz_users.phone_number, job: orgz_users.phone_number, avatar: orgz_users.avatar, is_active: orgz_users.is_active, bank_name: orgz_users.bank_name, account_name: orgz_users.account_name, account_number: orgz_users.account_number})
 
     }else{
       toast('Error get data from server: ' + error)
@@ -46,17 +46,17 @@ export default function Profile() {
   const handleFormInput = async (attr, value) => {
     if(value){
       console.log(value)
-      toast('toast', {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          transition: 'Bounce',
-        })
+      // toast('toast', {
+      //     position: "top-right",
+      //     autoClose: 5000,
+      //     hideProgressBar: false,
+      //     closeOnClick: false,
+      //     pauseOnHover: true,
+      //     draggable: true,
+      //     progress: undefined,
+      //     theme: "light",
+      //     transition: 'Bounce',
+      //   })
       if(attr == 'avatar'){
 
         console.log(value)
@@ -89,18 +89,20 @@ export default function Profile() {
                                     .is('deleted_at', null)
                                     .single()
       if(orgz_users){
-        setUsers({full_name: orgz_users.full_name, email: orgz_users.email, password: orgz_users.password, phone_number: orgz_users.phone_number, job: orgz_users.phone_number, avatar: orgz_users.avatar, is_active: orgz_users.is_active})
-        toast('Update data akun berhasil!', {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: false,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          transition: 'Bounce',
-        })
+        setUsers({full_name: orgz_users.full_name, email: orgz_users.email, password: orgz_users.password, phone_number: orgz_users.phone_number, job: orgz_users.phone_number, avatar: orgz_users.avatar, is_active: orgz_users.is_active, bank_name: orgz_users.bank_name, account_name: orgz_users.account_name, account_number: orgz_users.account_number})
+        toast('Update data akun berhasil!')
+
+        // {
+        //   position: "top-right",
+        //   autoClose: 5000,
+        //   hideProgressBar: false,
+        //   closeOnClick: false,
+        //   pauseOnHover: true,
+        //   draggable: true,
+        //   progress: undefined,
+        //   theme: "light",
+        //   transition: 'Bounce',
+        // }
       }else{
         toast('Error update data to server: ' + error)
       }
@@ -246,6 +248,62 @@ export default function Profile() {
               </div>
 
               <hr className="mt-6 border-b-1 border-blueGray-300" />
+
+              {/* <h2 className="text-lg font-medium text-gray-600 my-5">Informasi Bank</h2>
+
+              <div className="w-full lg:w-6/12 px-4">
+                <div className="relative w-full mb-3">
+                  <label
+                    className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
+                    Nama Bank
+                  </label>
+                  <input
+                    type="email"
+                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    placeholder=""
+                    value={users.bank_name || ''}
+                    onChange={(e) => handleFormInput('bank_name', e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="w-full lg:w-6/12 px-4">
+                <div className="relative w-full mb-3">
+                  <label
+                    className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
+                    Nama Akun
+                  </label>
+                  <input
+                    type="email"
+                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    placeholder=""
+                    value={users.account_name || ''}
+                    onChange={(e) => handleFormInput('account_name', e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="w-full lg:w-6/12 px-4">
+                <div className="relative w-full mb-3">
+                  <label
+                    className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
+                    Nomor Rekening
+                  </label>
+                  <input
+                    type="email"
+                    className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    placeholder=""
+                    value={users.account_number || ''}
+                    onChange={(e) => handleFormInput('account_number', e.target.value)}
+                  />
+                </div>
+              </div> */}
+
+
 
             </form>
           </div>

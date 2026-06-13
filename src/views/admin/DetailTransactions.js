@@ -222,7 +222,8 @@ export default function DetailTransactions() {
                     </label>
                     <span className="text-base text-gray-700"> {transactions.promo_code}
                     </span>
-                    <span className={`${transactions.order_status ==='successed'? 'bg-green-400' : transactions.order_status ==='failed'? 'bg-red-400': 'bg-yellow-400' } ml-2 px-3 py-2 rounded-md`}>{`${transactions.order_status ==='successed'? <CheckCircleIcon className="w-5 bg-inherit" /> : transactions.order_status ==='failed'?<CheckCircleIcon className="w-5 bg-inherit" /> : ''}`} </span>
+                    <span className={`${transactions.order_status ==='successed'? 'bg-green-400' : transactions.order_status ==='failed'? 'bg-red-400': 'bg-yellow-400' } ml-2 px-3 py-2 rounded-md`}>{`${transactions.order_status ==='successed'? 'verified' : transactions.order_status ==='failed'? 'not verified' : ''}`} </span>
+                    {/* <CheckCircleIcon className="w-5 bg-inherit" /> */}
                   </div>
                 </div>
                 <div className="w-full lg:w-6/12 px-4">
@@ -280,27 +281,27 @@ export default function DetailTransactions() {
                                     <p>{key+1}. {product.orgz_products.title}</p>
                                     <div className="px-3 py-2 mb-2">
                                       <div className='flex justify-between max-w-xl text-center' >
-                                        <span className="text-base text-gray-600 bg-blue-300"> Harga </span>
+                                        <span className="text-base text-gray-600 mb-3"> Harga </span>
                                         {/* <span className="text-base text-gray-600"> : </span> */}
                                         <span className="items-end text-base text-gray-500"> {`${formatCurrency(product.price, 'IDR')}`} </span>
                                       </div>
                                       <div className='flex justify-between max-w-xl items-center' >
-                                        <span className="text-base text-gray-600"> Kode Promo </span>
+                                        <span className="text-base text-gray-600 mb-3"> Kode Promo </span>
                                         {/* <span className="text-base text-gray-600"> : </span> */}
                                         <span className="items-end text-base text-gray-500"> {product.promo_code} </span>
                                       </div>
                                       <div className='flex justify-between max-w-xl items-center' >
-                                        <span className="text-base text-gray-600"> Jumlah</span>
+                                        <span className="text-base text-gray-600 mb-3"> Jumlah</span>
                                         {/* <span className="text-base text-gray-600"> : </span> */}
                                         <span className="items-end text-base text-gray-500"> {product.amount} </span>
                                       </div>
                                       <div className='flex justify-between max-w-xl items-center' >
-                                        <span className="text-base text-gray-600"> Diskon</span>
+                                        <span className="text-base text-gray-600 mb-3"> Diskon</span>
                                         {/* <span className="text-base text-gray-600"> : </span> */}
                                         <span className="items-end text-base text-gray-500"> {product.discount} %</span>
                                       </div>
-                                      <div className='flex justify-between items-center' >
-                                        <span className="text-base text-gray-600"> Diskon Nominal</span>
+                                      <div className='flex justify-between max-w-xl items-center' >
+                                        <span className="text-base text-gray-600 mb-3"> Diskon Nominal</span>
                                         {/* <span className="text-base text-gray-600"> : </span> */}
                                         <span className="items-end text-base text-gray-500"> {`${formatCurrency(product.discount_nominal, 'IDR')}`} </span>
                                       </div>
@@ -321,7 +322,7 @@ export default function DetailTransactions() {
                <h2 className="my-10">
                 Informasi Pendaftar <hr className="mt-6 border-b-1 border-blueGray-300" />
               </h2>
-                <div className="w-full lg:w-6/12 px-4">
+                <div className="w-full lg:w-6/12 px-4 mb-3">
                   <div className="relative w-full mb-3">
                     <label
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
@@ -332,7 +333,7 @@ export default function DetailTransactions() {
                     <span className="text-base text-gray-700"> {transactions.orgz_users && transactions.orgz_users.phone_number} </span>
                   </div>
                 </div>
-                <div className="w-full lg:w-6/12 px-4">
+                <div className="w-full lg:w-6/12 px-4 mb-3">
                   <div className="relative w-full mb-3">
                     <label
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
@@ -343,7 +344,7 @@ export default function DetailTransactions() {
                     <span className="text-base text-gray-700"> {transactions.orgz_users && transactions.orgz_users.domicile} </span>
                   </div>
                 </div>
-                <div className="w-full lg:w-6/12 px-4">
+                <div className="w-full lg:w-6/12 px-4 mb-3">
                   <div className="relative w-full mb-3">
                     <label
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
@@ -354,7 +355,7 @@ export default function DetailTransactions() {
                     <span className="text-base text-gray-700"> {transactions.orgz_users && transactions.orgz_users.job || ''} </span>
                   </div>
                 </div>
-                <div className="w-full lg:w-6/12 px-4">
+                <div className="w-full lg:w-6/12 px-4 mb-3">
                   <div className="relative w-full mb-3">
                     <label
                       className="block uppercase text-blueGray-600 text-xs font-bold mb-2"

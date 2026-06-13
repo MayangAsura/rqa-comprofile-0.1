@@ -20,7 +20,7 @@ export default function Detailwithdraws() {
   const {userInfo, orgzId} = useSelector(state => state.authReducer)
   const [users, setUsers] = useState({full_name: '', email: '', phone_number: '', job: '', avatar: ''})
   const [withdraws, setwithdraws] = useState({})
-  const { wn } = useParams()
+  const { id } = useParams()
   const username = 'admin-rqa@gmail.com'
 
   useEffect(() => {
@@ -28,20 +28,21 @@ export default function Detailwithdraws() {
       getUsers()
       console.log('users', users)
     }
-    console.log('withdraw_number', wn)
-    if(wn){
-      getDetailwithdraws(wn)
+    console.log('withdraw_number', id)
+    if(id){
+      getDetailwithdraws(id)
       console.log('withdraws', withdraws)
     }
-  }, [userInfo, wn])
 
-  const getDetailwithdraws = async (wn) => {
+  }, [userInfo, id])
+
+  const getDetailwithdraws = async (id) => {
     try {
       const { data: orgz_cash_flows, error } = await supabase
                         .from('orgz_cash_flows')
-                        .select('withdraw_number,last_balance,last_debit,total_debit,request_withdraw,transfer_eviden,is_complete,admin_fee')
+                        .select('id, withdraw_number,last_balance,last_debit,total_debit,request_withdraw,transfer_eviden,is_complete,admin_fee')
                         .eq('orgz_id', ORGZ_ID)
-                        .eq('withdraw_number', wn)
+                        .eq('id', id)
                         .is('deleted_at', null)
                         .single()
                                         // const order = orgz_orders.map(order => ({order_status: order.order_status, total_price: order.total_price, total_amount: order.total_amount, total_discount: order.total_discount, promo_code: order.promo_code, products: order.orgz_order_details, users: order.orgz_users, participants: order.orgz_order_participants, packet_name: order.orgz_packets.name}))
@@ -56,10 +57,37 @@ export default function Detailwithdraws() {
     }
   }
 
+  // const getCurrentBalance = async () => {
+	// 	try {
+
+	// 		let { data: orgz_orders, error } = await supabase
+	// 																					.from('orgz_orders')
+	// 																					.select(`
+	// 																						total_price.sum(),
+	// 																						orgz_identities (
+	// 																							orgz_status
+	// 																						)
+	// 																					`)
+	// 																					.eq('order_status', 'successed')
+	// 																					.eq('orgz_identities.orgz_status', 'live')
+	// 																					.eq('orgz_id', orgzId??ORGZ_ID)
+	// 																					.is('deleted_at', null)
+	// 																					.single()
+
+	// 		if(orgz_orders){
+  //       withdraws.last_balance = orgz_orders.sum
+	// 			// setCurrentBalance(orgz_orders.sum)
+	// 		}
+
+	// 	} catch (error) {
+	// 		toast.error('Failed, Failed when get current balance')
+	// 	}
+	// }
+
   const getUsers = async () => {
     const { data, error } = await supabase
                                   .from('orgz_users')
-                                  .select('*, orgz_users ')
+                                  .select('*')
                                   .eq('email', 'admin-rqa@gmail.com')
                                   .eq('is_active', true)
                                   .is('deleted_at', null)

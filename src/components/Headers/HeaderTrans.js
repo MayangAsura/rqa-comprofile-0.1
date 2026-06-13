@@ -12,12 +12,12 @@ export default function HeaderTrans() {
 
   const {userInfo, orgzInfo, orgzId} = useSelector(state => state.authReducer)
   const [balance, setBalance] = useState(0)
-  const [total_debit, setTotalDebit] = useState(0)
+  const [total_transactions, setTotalTransactions] = useState(0)
   const [total_credit, setTotalKredit] = useState(0)
 
   useEffect(() => {
     getBalance()
-    getTotalDebit()
+    getTotalTransactions()
     getTotalCredit()
   }, [])
 
@@ -41,11 +41,11 @@ export default function HeaderTrans() {
     }
 
   }
-  const getTotalDebit = async () => {
+  const getTotalTransactions = async () => {
     let { data: orgz_orders, error } = await supabase
                                       .from('orgz_orders')
                                       .select(`
-                                        total_price.sum(),
+                                        id.count(),
                                         orgz_identities (
                                           orgz_id
                                         )
@@ -59,7 +59,7 @@ export default function HeaderTrans() {
 
     if(orgz_orders){
       console.log('orgz_orders', orgz_orders)
-      setBalance(orgz_orders.sum)
+      setBalance(orgz_orders.count)
     }
 
   }
@@ -96,8 +96,8 @@ export default function HeaderTrans() {
                 <CardTransStats
                   statSubtitle="Saldo"
                   statTitle={balance}
-                  statArrow="up"
-                  statPercent="3.48"
+                  // statArrow="up"
+                  // statPercent="3.48"
                   statPercentColor="text-emerald-500"
                   statDescription="1 pekan terakhir"
                   statIconName="far fa-chart-bar"
@@ -106,10 +106,10 @@ export default function HeaderTrans() {
               </div>
               <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
                 <CardTransStats
-                  statSubtitle="Total Debit"
-                  statTitle={total_debit}
-                  statArrow="down"
-                  statPercent="3.48"
+                  statSubtitle="Jumlah Transaksi"
+                  statTitle={total_transactions}
+                  // statArrow="down"
+                  // statPercent="3.48"
                   statPercentColor="text-red-500"
                   statDescription="Since last week"
                   statIconName="fas fa-chart-pie"
@@ -120,8 +120,8 @@ export default function HeaderTrans() {
                 <CardTransStats
                   statSubtitle="Total Kredit"
                   statTitle={total_credit}
-                  statArrow="down"
-                  statPercent="1.10"
+                  // statArrow="down"
+                  // statPercent="1.10"
                   statPercentColor="text-orange-500"
                   statDescription="Since yesterday"
                   statIconName="fas fa-users"

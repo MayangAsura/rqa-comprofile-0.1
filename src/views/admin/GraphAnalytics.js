@@ -21,7 +21,7 @@ export default function GraphAnalytics() {
 
   useEffect(() => {
     const type = 'classes'
-    // getClasses(type)
+    getClasses(type)
     toast('Hello from dashboard')
   }, []) // Removed product dependency to avoid infinite loop
 
@@ -51,11 +51,13 @@ export default function GraphAnalytics() {
         }
       } else {
         setOptions([])
+        setLoading(true)
         toast.info('No products found.')
       }
     } catch (error) {
       console.error('Error fetching products:', error)
       toast.error('Error retrieving data from server.')
+      setLoading(true)
       setOptions([])
     } finally {
       setLoading(false)
