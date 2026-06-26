@@ -212,7 +212,6 @@ export const data = {
 					</>
 
 				)
-                                                                                                                                                                                                                                                                                                      3
 			}
 		}
 
